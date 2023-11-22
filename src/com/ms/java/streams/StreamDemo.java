@@ -3,7 +3,6 @@ package com.ms.java.streams;
 import com.ms.java.functionalinterface.Employee;
 
 import java.util.*;
-import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
