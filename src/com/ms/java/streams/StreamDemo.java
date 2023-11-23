@@ -46,5 +46,25 @@ public class StreamDemo {
         //6. Write a program to create comma seperated list of First names of employees order by dateOfbirth.
         String str = empList.stream().sorted(Comparator.comparing(x->x.getDateOfBirth())).map(x->x.getFirstName()).collect(Collectors.joining(", "));
         System.out.println(str);
+
+        //try with reduce
+        String string = empList.stream().sorted(Comparator.comparing(x->x.getDateOfBirth())).map(x->x.getFirstName()).reduce("",String::concat);
+        System.out.println(string);
+
+        Integer sum = IntStream.range(0,10).reduce(0,Integer::sum);
+        System.out.println(sum);
+
+        Integer sumClosed = IntStream.rangeClosed(0,10).reduce(0,Integer::sum);
+        System.out.println(sumClosed);
+
+        OptionalInt optionalIntMax = IntStream.range(0,15).reduce(Integer::max);
+        OptionalInt optionalIntSum = IntStream.range(0,10).reduce(Integer::sum);
+        OptionalInt optionalIntMin = IntStream.range(0,15).reduce(Integer::min);
+
+        IntSummaryStatistics iss = IntStream.range(0,10).summaryStatistics();
+        System.out.println("iss is :\n"+iss.getAverage()+"\n"+ iss.getSum()+"\n"+ iss.getCount()+"\n"+iss.getMax()+"\n"+iss.getMin());
+
+
+
     }
 }

@@ -6,10 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.function.BiPredicate;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
 import java.util.stream.Collectors;
 
 public class FunctionalInterfaceLambdasDemo {
@@ -59,14 +56,14 @@ public class FunctionalInterfaceLambdasDemo {
         };
         System.out.println(s.get());
 
-
-        //1. Write a program to Sort the list of employees by month in dateOfBirth. in Sort method use Lamda in comparator.
         List<User> userList = new ArrayList<>();
         for(Employee emp:empList)
             userList.add(getUser(emp));
-        System.out.println(userList);
+        System.out.println("User List with Function are : "+userList);
 
-        List<Employee> resul = empList.stream().sorted((o1,o2)-> o1.getDateOfBirth().getYear()-o2.getDateOfBirth().getYear()).collect(Collectors.toList());
+//Lambdas
+        //1. Write a program to Sort the list of employees by month in dateOfBirth. in Sort method use Lamda in comparator.
+        List<Employee> resul = empList.stream().sorted((o1,o2)-> o1.getDateOfBirth().getMonthValue()-o2.getDateOfBirth().getMonthValue()).collect(Collectors.toList());
         System.out.println(resul);
 
         //2. Write a program to Create 2 threads using lambda. One thread will print list of employees another will print list of users.
@@ -109,16 +106,18 @@ public class FunctionalInterfaceLambdasDemo {
 
     private static User getUser(Employee employee) {
 
-        User user = new User();
-        user.setUserName(employee.getFirstName()+"_"+employee.getLastName()+"_"+employee.getDateOfBirth()+"_"+employee.getId());
-        Supplier<String> s = ()->{
-            SecureRandom random = new SecureRandom();
-            return new BigInteger(64,random).toString(16);
+        Function<Employee,User> func = (x)->{
+            User user = new User();
+            user.setUserName(x.getFirstName()+"_"+x.getLastName()+"_"+x.getDateOfBirth()+"_"+x.getId());
+            Supplier<String> s = ()->{
+                SecureRandom random = new SecureRandom();
+                return new BigInteger(64,random).toString(16);
+            };
+            user.setPassword(s.get());
+            user.setId(x.getId());
+            return user;
         };
-        //System.out.println(s.get());
-        user.setPassword(s.get());
-        user.setId(employee.getId());
-        return user;
+         return func.apply(employee);
     }
 
     private static List<Employee> filterBiPredicate(List<Employee> empList, BiPredicate<Employee, Integer> bp, int salary) {
