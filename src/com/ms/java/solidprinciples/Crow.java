@@ -20,6 +20,6 @@ public class Crow implements FlyingBird {
 
     @Override
     public void fly() {
-        System.out.println(getName()+" is flying");
+        System.out.println(getName()+" can flying");
     }
 }
