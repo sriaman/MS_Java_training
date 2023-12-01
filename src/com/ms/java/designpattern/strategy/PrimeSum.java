@@ -2,7 +2,6 @@ package com.ms.java.designpattern.strategy;
 
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 public class PrimeSum implements Sum{
     @Override
@@ -15,6 +14,6 @@ public class PrimeSum implements Sum{
                     return false;
             return true;
         };
-        return lstSum.stream().filter(p).reduce(0,(a,b)->a+b);
+        return lstSum.stream().filter(p).reduce(0,Integer::sum);
     }
 }
