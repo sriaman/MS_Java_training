@@ -1,0 +1,36 @@
+1. Write a query to find emp name and his manager name from a table Employee(id, name, managerId)
+
+SELECT e.name AS emp_name, m.name AS manager_name
+FROM Employee e
+JOIN Employee m ON e.managerId = m.id;
+
+*******************************
+
+2. Write a query to find one emp from each department who is getting highest salary within his dept.
+
+SELECT
+    id,
+    name,
+    department,
+    salary
+FROM
+    Employee e
+WHERE
+    salary = (
+        SELECT MAX(salary)
+        FROM Employee
+        WHERE department = e.department
+    );
+
+*************************************************
+
+3. Write a query to delete duplicate rows from a table.
+
+DELETE FROM Employee
+WHERE (empId, empName) IN (
+    SELECT empId, empName
+    FROM Employee
+    GROUP BY empId, empName
+    HAVING COUNT(*) > 1
+);
+
